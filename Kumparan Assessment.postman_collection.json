@@ -1,0 +1,411 @@
+{
+	"info": {
+		"_postman_id": "1d814d1e-3ccd-4b64-98ca-2820e4145166",
+		"name": "Kumparan Assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should response 201 status code', () => {",
+							"    pm.expect(pm.response).to.have.status(201);",
+							"});",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.includes('application/json');",
+							"}); ",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"});",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"    ",
+							"    pm.expect(responseJson.status).to.equal('success');",
+							"    pm.expect(responseJson.message).to.equal('Author sudah ditambahkan');",
+							"    pm.expect(responseJson.authorId).to.be.a('string');",
+							"",
+							"    pm.environment.set('x-api-key', responseJson.authorId);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Nazwa\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/authors",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Article with Correct X-API-KEY",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should response 201 status code', () => {",
+							"    pm.expect(pm.response).to.have.status(201);",
+							"});",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.includes('application/json');",
+							"}); ",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"});",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"    ",
+							"    pm.expect(responseJson.status).to.equal('success');",
+							"    pm.expect(responseJson.message).to.equal('Article sudah ditambahkan');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Kueri berparameter\",\n    \"body\": \"Contoh sebelumnya merupakan penggunaan fungsi query tanpa menuliskan nilai (parameter) pada teks kuerinya. Lantas bagaimana bila kita ingin menuliskan kueri berparameter? Apakah cukup dengan template literals seperti ini?\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/articles",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"articles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Article with Wrong X-API-KEY Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should response 400 status code', () => {",
+							"    pm.expect(pm.response).to.have.status(400);",
+							"});",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.includes('application/json');",
+							"}); ",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"});",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"    ",
+							"    pm.expect(responseJson.status).to.equal('Bad Request');",
+							"    pm.expect(responseJson.message).to.equal('X-API-KEY Anda salah');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{bad_x-api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Kueri berparameter\",\n    \"body\": \"Contoh sebelumnya merupakan penggunaan fungsi query tanpa menuliskan nilai (parameter) pada teks kuerinya. Lantas bagaimana bila kita ingin menuliskan kueri berparameter? Apakah cukup dengan template literals seperti ini?\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/articles",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"articles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Articles By Correct Keyword",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should response 200 status code', () => {",
+							"    pm.expect(pm.response).to.have.status(200);",
+							"});",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.includes('application/json');",
+							"}); ",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"});",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"    ",
+							"    pm.expect(responseJson.status).to.equal('success');",
+							"    pm.expect(responseJson.data).to.be.an('array');",
+							"    pm.expect(responseJson.data[0]).to.be.an('object');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/articles?query=kueri",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"articles"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "kueri"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Articles By Wrong Keyword",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should response 404 status code', () => {",
+							"    pm.expect(pm.response).to.have.status(404);",
+							"});",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.includes('application/json');",
+							"}); ",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"});",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"    ",
+							"    pm.expect(responseJson.status).to.equal('Not Found');",
+							"    pm.expect(responseJson.message).to.equal('Article gagal ditemukan');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/articles?query=kuera",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"articles"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "kuera"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Articles By Correct Author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should response 200 status code', () => {",
+							"    pm.expect(pm.response).to.have.status(200);",
+							"});",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.includes('application/json');",
+							"}); ",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"});",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"    ",
+							"    pm.expect(responseJson.status).to.equal('success');",
+							"    pm.expect(responseJson.data).to.be.an('array');",
+							"    pm.expect(responseJson.data[0]).to.be.an('object');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/articles?author=Nazwa",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"articles"
+					],
+					"query": [
+						{
+							"key": "author",
+							"value": "Nazwa"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Articles By Wrong Author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should response 404 status code', () => {",
+							"    pm.expect(pm.response).to.have.status(404);",
+							"});",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.includes('application/json');",
+							"}); ",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"});",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"    ",
+							"    pm.expect(responseJson.status).to.equal('Not Found');",
+							"    pm.expect(responseJson.message).to.equal('Article gagal ditemukan');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/articles?author=Nazwu",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"articles"
+					],
+					"query": [
+						{
+							"key": "author",
+							"value": "Nazwu"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
